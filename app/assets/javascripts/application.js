@@ -17,19 +17,27 @@
 //= require semantic-ui
 //= require_tree .
 
-$(document).ready('turbolinks:load', function functionName() {
-  $('.ui.dropdown').dropdown();
-  $('.message .close')
-  .on('click', function() {
-    $(this)
-      .closest('.message')
-      .transition('fade')
-    ;
+scroll_bottom = function() {
+  if ($('#messages').length > 0) {
+    $('#messages').scrollTop($('#messages')[0].scrollHeight);
+  };
+};
+
+submit_message = function() {
+  $('#message_body').on('keydown', function(e) {
+    if (e.keyCode == 13) {
+      $('button').click();
+      e.target.value = "";
+    };
   });
-  $('.ui.message.success').modal('show').delay(5000).queue(function() {
-       $(this).modal('hide').dequeue();
-   });
-  $('.ui.message.error').modal('show').delay(5000).queue(function() {
-       $(this).modal('hide').dequeue();
-   });
+};
+
+$(document).on('turbolinks:load', function functionName() {
+  $('.ui.dropdown').dropdown();
+  $('.message .close').on('click', function() {
+    console.log('testtt')
+    $(this).closest('.message').transition('fade');
+  });
+  scroll_bottom();
+  submit_message();
 })
